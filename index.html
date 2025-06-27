@@ -52,7 +52,7 @@
       .wave-path { fill: #fff; transition: fill 0.3s; }
       html.dark .wave-path { fill: #2d2d2d; }
       /* Tap targets */
-      a, button, .jump-link, [role="button"] { min-width: 44px; min-height: 44px; padding: 0.5rem 1rem; }
+      a, button, .jump-link, [role="button"] { min-width: 44px; min-height: 44px; padding: 0.75rem 1.25rem; }
       /* Responsive font for hero */
       #hero-title { font-size: 2.5rem; }
       @media (min-width: 768px) { #hero-title { font-size: 4rem; } }
@@ -67,9 +67,9 @@
       .dark .text-gray-300 { color: #e0e0e0 !important; }
       .text-gray-500 { color: #444 !important; }
       .dark .text-gray-400 { color: #cccccc !important; }
-      .text-orange-400 { color: #c05621 !important; } /* #c05621 is WCAG AA on white */
-      .bg-orange-400 { background-color: #c05621 !important; }
-      .hover\:bg-orange-500:hover { background-color: #a04315 !important; }
+      .text-orange-400 { color: #b45309 !important; } /* #b45309 is AA on white */
+      .bg-orange-400 { background-color: #b45309 !important; }
+      .hover\:bg-orange-500:hover { background-color: #92400e !important; }
       .dark .hover\:bg-orange-600:hover { background-color: #ff9800 !important; }
       /* ...other critical above-the-fold styles... */
     </style>
@@ -85,6 +85,7 @@
     <!-- SEO & Meta -->
     <title>CORA – Reinventing Online Fashion</title>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#1a1a1a">
@@ -92,12 +93,20 @@
     <meta property="og:title" content="CORA – Reinventing Online Fashion">
     <meta property="og:description" content="CORA revolutionizes online fashion with 3D virtual try-on, solving sizing issues and reducing returns for retailers and shoppers worldwide. Experience the future of fit-tech.">
     <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
-    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:url" content="https://solojeev.github.io/Website-Version-3/">
+    <meta property="og:locale" content="en_IN">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CORA – Reinventing Online Fashion">
     <meta name="twitter:description" content="CORA revolutionizes online fashion with 3D virtual try-on, solving sizing issues and reducing returns for retailers and shoppers worldwide. Experience the future of fit-tech.">
     <meta name="twitter:image" content="https://yourdomain.com/og-image.jpg">
     <link rel="icon" href="favicon.ico">
+    <link rel="canonical" href="https://solojeev.github.io/Website-Version-3/">
+    <link rel="manifest" href="/manifest.json">
+    <!-- Security & Best Practices Meta Tags -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://embed.tawk.to https://cdn.tailwindcss.com https://cdn.jsdelivr.net; object-src 'none'; frame-ancestors 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://yourdomain.com;">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin">
     <!-- Non-critical CSS: loaded async -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -114,7 +123,7 @@
           extend: {
             colors: {
               dark: { DEFAULT: '#181818', secondary: '#232323' },
-              orange: { 400: '#c05621' }, // WCAG AA orange
+              orange: { 400: '#b45309' }, // AA orange
               gray: {
                 800: '#181818',
                 700: '#222',
@@ -128,10 +137,12 @@
         }
       }
     </script>
-    <!-- All external resources use HTTPS, no mixed-content -->
-    <!-- No duplicate scripts/styles: only one Tailwind, Swiper, FontAwesome, etc. -->
-    <!-- No deprecated APIs or inline event handlers -->
-    <!-- ...existing code for custom cursor and other styles... -->
+    <style>
+      /* ...existing critical CSS, color contrast, tap targets, keyframes... */
+      /* All animations use will-change for compositing, <10 total keyframes */
+      .hero-gradient-bg, .wave-divider, .scroll-indicator { will-change: transform, background-position; }
+      /* ...existing code... */
+    </style>
 </head>
 <body class="transition-colors duration-200 bg-white dark:bg-dark text-gray-800 dark:text-gray-100">
     <!-- Custom Cursor -->
@@ -446,26 +457,43 @@
         </div>
     </div>
 
-    <!-- Swiper.js CDN (deferred, only loaded after LCP) -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
-    <!-- Custom Cursor and Main JS: split, lazy load below-the-fold scripts -->
+    <!-- Swiper.js and Tawk.to: lazy-load after LCP using requestIdleCallback or DOMContentLoaded -->
     <script type="module">
-      // Only load below-the-fold scripts after DOMContentLoaded
-      window.addEventListener('DOMContentLoaded', () => {
-        // If ./main.js does not exist, comment out or remove this line to avoid errors
-        // import('./main.js').catch(() => {});
-      });
-    </script>
-    <!-- Tawk.to and other third-party scripts: defer until after LCP -->
-    <script type="text/javascript" defer>
-      window.addEventListener('load', function() {
+      // Dynamically import heavy JS only after LCP
+      function loadScript(src, cb) {
+        const s = document.createElement('script');
+        s.src = src;
+        s.defer = true;
+        s.onload = cb;
+        document.head.appendChild(s);
+      }
+      function loadTawk() {
         var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
         s1.async=true;
         s1.src='https://embed.tawk.to/685dbecb862011190b127ade/1iun32jjb';
         s1.charset='UTF-8';
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
+      }
+      function afterLCP(fn) {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(fn);
+        } else {
+          window.addEventListener('DOMContentLoaded', fn);
+        }
+      }
+      afterLCP(() => {
+        loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', () => {
+          // Swiper init here if needed
+        });
+        loadTawk();
+        // Dynamically import custom JS modules (carousel, cursor, etc.)
+        // import('./main.js').catch(() => {});
       });
+    </script>
+    <!-- Legacy JS fallback for older browsers -->
+    <script nomodule defer>
+      // Optionally load legacy JS here if needed
     </script>
     <!-- No inline onclick/onhover handlers anywhere -->
     <!-- All event listeners are attached via addEventListener in JS modules -->
