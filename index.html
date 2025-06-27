@@ -10,7 +10,7 @@
 
 
     <!-- ✅ Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <!-- Optional: Add dark mode support -->
     <script>
     tailwind.config = {
@@ -28,8 +28,10 @@
     }
     </script>
 
+    <!-- SEO & Meta -->
+    <title>CORA – Reinventing Online Fashion</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device=5.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#1a1a1a">
     <meta name="description" content="CORA reinvents online fashion with 3D virtual try-on, solving sizing challenges and reducing returns for retailers and shoppers worldwide.">
@@ -37,9 +39,10 @@
     <meta property="og:description" content="CORA reinvents online fashion with 3D virtual try-on, solving sizing challenges and reducing returns for retailers and shoppers worldwide.">
     <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
     <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="CORA - Reinventing Online Fashion">
-    <meta property="twitter:description" content="CORA reinvents online fashion with 3D virtual try-on, solving sizing challenges and reducing returns for retailers and shoppers worldwide.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CORA - Reinventing Online Fashion">
+    <meta name="twitter:description" content="CORA reinvents online fashion with 3D virtual try-on, solving sizing challenges and reducing returns for retailers and shoppers worldwide.">
+    <meta name="twitter:image" content="https://yourdomain.com/og-image.jpg">
     <link rel="icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -48,13 +51,13 @@
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="all">
     <!-- Google Fonts - Recursive -->
-    <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@400;700&display=swap" rel="stylesheet" media="all">
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="all" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
     <!-- Swiper.js CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'" />
     <style>
 
         /* Root Variables */
@@ -81,6 +84,13 @@
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+            background-color: #fff;
+            color: #181818; /* slightly darker for better contrast */
+        }
+
+        .dark body, html.dark body {
+            background-color: #1a1a1a;
+            color: #f3f3f3;
         }
 
         .modal {
@@ -301,6 +311,82 @@
           fill: #2d2d2d;   /* dark-secondary background */
         }
 
+        /* Accessibility: Ensure color contrast for text and backgrounds */
+        .text-gray-800, .dark .text-gray-100 {
+            color: #181818 !important;
+        }
+        .dark .text-gray-100 {
+            color: #f3f3f3 !important;
+        }
+        .bg-white {
+            background-color: #fff !important;
+        }
+        .dark .bg-dark-secondary {
+            background-color: #232323 !important;
+        }
+        .bg-gray-50 {
+            background-color: #f5f5f5 !important;
+        }
+        .dark .bg-gray-800 {
+            background-color: #232323 !important;
+        }
+        .text-orange-400 {
+            color: #e65100 !important; /* darken for contrast */
+        }
+        .bg-orange-400 {
+            background-color: #e65100 !important;
+        }
+        .hover\:bg-orange-500:hover {
+            background-color: #bf360c !important;
+        }
+        .dark .hover\:bg-orange-600:hover {
+            background-color: #ff9800 !important;
+        }
+        .text-gray-700 {
+            color: #222 !important;
+        }
+        .dark .text-gray-300 {
+            color: #e0e0e0 !important;
+        }
+        .text-gray-500 {
+            color: #444 !important;
+        }
+        .dark .text-gray-400 {
+            color: #cccccc !important;
+        }
+        .footer {
+            background-color: #faf9fb !important;
+        }
+        .dark .footer {
+            background-color: #232323 !important;
+        }
+
+        /* Accessibility: Tap target size for all links and buttons */
+        a, button, .jump-link, [role="button"] {
+            min-width: 44px;
+            min-height: 44px;
+            padding: 0.5rem 1rem;
+        }
+        .jump-link {
+            padding: 0.5rem 1rem !important;
+        }
+        .footer nav.flex a {
+            min-width: 44px;
+            min-height: 44px;
+            padding: 0.5rem 1rem !important;
+        }
+        .footer nav.flex {
+            gap: 2rem !important;
+        }
+        .footer .fab {
+            min-width: 44px;
+            min-height: 44px;
+            line-height: 44px;
+        }
+        .custom-cursor {
+            pointer-events: none;
+        }
+
     </style>
     <!-- Custom Cursor Styles -->
     <style>
@@ -327,6 +413,21 @@
         .custom-cursor { display: none !important; }
       }
     </style>
+    <!-- Inline critical CSS for hero gradient and keyframes -->
+    <style>
+      /* Critical hero gradient and keyframes */
+      .hero-gradient-bg {
+        background: linear-gradient(120deg, #1a1a1a, #003B70, #f28d28c4, #1a1a1a 90%);
+        background-size: 200% 200%;
+        animation: gradientMove 6s ease-in-out infinite;
+      }
+      @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      /* ...other critical hero styles if needed... */
+    </style>
 </head>
 <body class="transition-colors duration-200 bg-white dark:bg-dark text-gray-800 dark:text-gray-100">
     <!-- Custom Cursor -->
@@ -335,7 +436,8 @@
 
     <!-- HERO SECTION -->
     <section class="h-screen hero-gradient-bg text-white flex flex-col items-center justify-center px-6 text-center relative" aria-labelledby="hero-title">
-      <p id="dynamic-greeting" class="text-lg md:text-xl text-orange-300 mb-4"></p>
+      <p id="dynamic-greeting" class="text-lg md:text-xl text-orange-400 mb-4"></p>
+      <!-- Ensure exactly one <h1> on the page -->
       <h1 id="hero-title" class="text-5xl md:text-7xl font-bold leading-tight mb-4">
         The Future of Fashion is Fit‑Tech.
       </h1>
@@ -345,12 +447,14 @@
       <a
         href="#waitlist"
         class="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold transition-all duration-300
-               hover:bg-gray-200 hover:scale-105 hover:ring-2 hover:ring-orange-300 dark:hover:bg-gray-800 dark:hover:text-white"
+               hover:bg-gray-200 hover:scale-105 hover:ring-2 hover:ring-orange-400 dark:hover:bg-gray-800 dark:hover:text-white"
         aria-label="Join the Waitlist"
+        style="min-width:44px;min-height:44px;padding:0.75rem 2rem;"
       >
         Join the Waitlist
       </a>
-      <a href="#problem" aria-label="Scroll to Problem" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator">
+      <a href="#problem" aria-label="Scroll to Problem" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator"
+         style="min-width:44px;min-height:44px;padding:0.5rem;">
         <!-- Hero chevron SVG -->
         <svg class="w-8 h-8 opacity-60 hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -530,10 +634,13 @@
                       loading="lazy"
                       aria-label="Concept Demo Video"
                   >
+                      <track kind="captions" src="captions.vtt" srclang="en" label="English captions">
                       Your browser doesn’t support video playback.
                   </video>
                 </div>
-                <button id="openModal" class="mt-8 py-3 px-6 bg-orange-400 text-white font-bold rounded-lg btn-disabled transition-all duration-200 transform hover:bg-orange-500 hover:scale-105 hover:ring-2 hover:ring-orange-400 dark:hover:bg-orange-600" disabled aria-label="Launch Interactive Demo (coming soon)">
+                <button id="openModal" class="mt-8 py-3 px-6 bg-orange-400 text-white font-bold rounded-lg btn-disabled transition-all duration-200 transform hover:bg-orange-500 hover:scale-105 hover:ring-2 hover:ring-orange-400 dark:hover:bg-orange-600"
+                    disabled aria-label="Launch Interactive Demo (coming soon)"
+                    style="min-width:44px;min-height:44px;padding:0.75rem 2rem;">
                     Launch Interactive Demo
                 </button>
                 <p class="text-xs text-gray-400 mt-2">Interactive demo coming soon.</p>
@@ -583,12 +690,15 @@
     <!-- Footer -->
     <footer class="footer footer-center bg-[#faf9fb] dark:bg-dark-secondary/80 rounded-sm p-6 mt-8" aria-label="Site footer">
       <nav class="flex justify-center gap-8 text-gray-500 dark:text-gray-300 mb-2 text-base font-normal" aria-label="Footer navigation">
-        <a href="privacy.html" class="hover:underline transition-all duration-200 hover:scale-105 hover:ring-2 hover:ring-orange-400 dark:hover:bg-gray-800 rounded-md px-2 py-1" aria-label="Privacy Policy">Policy</a>
-        <a href="contact.html" class="hover:underline transition-all duration-200 hover:scale-105 hover:ring-2 hover:ring-orange-400 dark:hover:bg-gray-800 rounded-md px-2 py-1" aria-label="Contact Page">Contact</a>
+        <a href="privacy.html" class="hover:underline transition-all duration-200 hover:scale-105 hover:ring-2 hover:ring-orange-400 dark:hover:bg-gray-800 rounded-md px-2 py-1"
+           aria-label="Privacy Policy" style="min-width:44px;min-height:44px;padding:0.5rem 1rem;">Policy</a>
+        <a href="contact.html" class="hover:underline transition-all duration-200 hover:scale-105 hover:ring-2 hover:ring-orange-400 dark:hover:bg-gray-800 rounded-md px-2 py-1"
+           aria-label="Contact Page" style="min-width:44px;min-height:44px;padding:0.5rem 1rem;">Contact</a>
       </nav>
       <nav aria-label="Social links">
         <div class="flex justify-center my-2">
-          <a href="https://www.linkedin.com/company/cora-fashion" class="hover:text-[#0077b5] transition-all duration-200 hover:scale-110 hover:ring-2 hover:ring-[#0077b5] dark:hover:bg-gray-800 rounded-full p-2" aria-label="Linkedin Link" target="_blank" rel="noopener">
+          <a href="https://www.linkedin.com/company/cora-fashion" class="hover:text-[#0077b5] transition-all duration-200 hover:scale-110 hover:ring-2 hover:ring-[#0077b5] dark:hover:bg-gray-800 rounded-full p-2"
+             aria-label="Linkedin Link" target="_blank" rel="noopener" style="min-width:44px;min-height:44px;padding:0.5rem;">
             <i class="fab fa-linkedin text-2xl" aria-hidden="true"></i>
           </a>
         </div>
@@ -618,7 +728,7 @@
     <!-- Modal -->
     <div id="demoModal" class="modal" role="dialog" aria-modal="true" aria-label="Interactive Concept Demo Modal">
         <div class="modal-content">
-            <span class="close-modal" aria-label="Close modal" tabindex="0">&times;</span>
+            <span class="close-modal" aria-label="Close modal" tabindex="0" style="min-width:44px;min-height:44px;padding:0.5rem 1rem;">&times;</span>
             
             <iframe 
                 src="index2.html" 
@@ -752,7 +862,7 @@
       })();
     </script>
     <!--Start of Tawk.to Script-->
-    <script type="text/javascript" async>
+    <script type="text/javascript" defer>
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
