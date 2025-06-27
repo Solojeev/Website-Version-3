@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The 'Add to Cart' Anxiety | CORA Blog</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome for Social Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary-orange: #f28d28c4;
+      --background-dark: #0f1921;
+      --card-bg: transparent;
+      --card-border: transparent;
+      --text-color: #f7f7fa;
+      --header-color: #5b5b5b;
+      --footer-color: #1a1a1a;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .heading {
+      color: var(--primary-orange);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background-dark);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background-color: rgba(42, 42, 42, 0.5);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 60px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .header.scrolled {
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px #00000033;
+    }
+
+    .header .logo {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--primary-orange);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .header .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .header .nav-links a {
+      font-size: 1rem;
+      color: var(--header-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .header .nav-links a:hover {
+      color: var(--primary-orange);
+    }
+
+    /* Main Content */
+    main.container {
+      flex: 1;
+      max-width: 100%;
+      margin: 120px auto 40px;
+      text-align: center;
+      /* Remove background and box-shadow to eliminate white frame */
+      background: none;
+      box-shadow: none;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+    }
+
+    p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      font-size: 1.125rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .featured-image {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .featured-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .tldr {
+      background-color: #f8f8f8;
+      border-left: 4px solid var(--primary-orange);
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 6px;
+    }
+
+    .cta {
+      display: inline-block;
+      background-color: #747474;
+      color: white;
+      text-decoration: none;
+      padding: 14px 24px;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .cta:hover {
+      background-color: var(--primary-orange);
+    }
+
+    /* Footer */
+    footer.footer {
+      background-color: var(--footer-color);
+      color: white;
+      padding: 40px 0;
+    }
+
+    .footer-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .footer-links a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      opacity: 0.8;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .copyright {
+      font-size: small;
+      color: var(--primary-orange);
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .header {
+        height: 60px;
+        padding: 10px 40px;
+      }
+
+      .header .nav-links {
+        gap: 15px;
+      }
+
+      main.container {
+        margin-top: 100px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      .cta {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+        row-gap: 10px;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .footer-links a {
+        margin: 0;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+    }
+
+    .blog-main {
+      background: none;
+      padding: 80px 0 60px 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .blog-card {
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      max-width: 860px;
+      width: 100%;
+      padding: 0;
+      margin: 0 auto;
+      text-align: left;
+      position: relative;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 38px;
+      font-size: 1.08rem;
+      color: #747474;
+      text-decoration: none;
+      background: #23242a;
+      color: #f7f7fa;
+      padding: 8px 20px;
+      border-radius: 7px;
+      transition: color 0.2s;
+    }
+    .heading h1 {
+      font-size: 2.7rem;
+      color: var(--primary-orange);
+      margin-bottom: 1.3rem;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 1.22rem;
+      color: #f28d28c4;
+      margin-bottom: 2.8rem;
+      line-height: 2.1;
+    }
+    .featured-image {
+      margin: 0 0 3.8rem 0;
+      text-align: center;
+    }
+    .featured-image img {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px #00000022;
+    }
+    .divider {
+      height: 1px;
+      background: #23242a;
+      margin: 48px 0 48px 0;
+    }
+    .blog-card p, .blog-card li, .blog-card h1, .blog-card h2, .blog-card h3, .blog-card .subtitle {
+      color: var(--text-color);
+    }
+    .blog-card ul {
+      margin-bottom: 2.2rem;
+      padding-left: 1.5rem;
+    }
+    .blog-card li {
+      font-size: 1.13rem;
+      margin-bottom: 1.1rem;
+      line-height: 1.9;
+    }
+    .blog-card h2 {
+      font-size: 1.55rem;
+      margin: 2.8rem 0 1.3rem 0;
+      color: #f28d28c4;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .tldr {
+      background-color: #181c22;
+      border-left: 4px solid var(--primary-orange);
+      padding: 28px 28px 28px 22px;
+      margin-top: 56px;
+      border-radius: 8px;
+      color: #f7f7fa;
+    }
+    .tldr h2 {
+      font-size: 1.18rem;
+      color: #f28d28c4;
+      margin-bottom: 1.1rem;
+      font-weight: 700;
+    }
+    .tldr ul {
+      margin-bottom: 0;
+    }
+    .tldr ul li {
+      color: #f7f7fa;
+    }
+    .cta {
+      display: inline-block;
+      background-color: #23242a;
+      color: var(--primary-orange);
+      text-decoration: none;
+      padding: 16px 28px;
+      font-weight: 600;
+      border-radius: 7px;
+      transition: background-color 0.3s ease;
+      margin: 2.2rem 0 0.5rem 0;
+      font-size: 1.13rem;
+    }
+    .cta:hover {
+      background-color: var(--primary-orange);
+      color: #23242a;
+    }
+    .related-posts {
+      margin-top: 44px;
+    }
+    .related-posts h3 {
+      font-size: 1.18rem;
+      color: #f28d28c4;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .related-posts ul {
+      list-style: disc inside;
+      color: #747474;
+      margin-bottom: 0;
+    }
+    .related-posts a {
+      color: var(--primary-orange);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .related-posts a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 900px) {
+      .blog-card {
+        padding: 36px 12px 32px 12px;
+      }
+    }
+    @media (max-width: 600px) {
+      .blog-card {
+        padding: 16px 2vw 18px 2vw;
+        border-radius: 14px;
+      }
+      .heading h1 {
+        font-size: 1.5rem;
+      }
+      .featured-image img {
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <a href="index.html" class="logo">CORA</a>
+    <nav class="nav-links">
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Blog Content -->
+  <main class="container blog-main">
+    <div class="blog-card">
+      <a href="blog.html" class="back-link">← Back to Blog</a>
+      <div class="heading"><h1>The 'Add to Cart' Anxiety: Why Online Fashion Still Feels Like a Gamble</h1></div>
+      <p class="subtitle"><em>Why does buying clothes online still feel risky in 2025? We unpack the fit frustration, wardrobe clutter, and hidden costs — and hint at what comes next.</em></p>
+      <div class="featured-image">
+        <img src="BI_1.png" alt="Infographic on online fashion challenges">
+      </div>
+      <div class="divider"></div>
+      <p>Let’s be honest — online shopping is supposed to be easy. Fun. Empowering. But when it comes to buying clothes, even the savviest shopper has felt it: That hesitation. That double-check. That moment where you ask yourself: <strong>“Will this even fit me?”</strong></p>
+      <p>It’s 2025. Yet we’re still guessing.</p>
+      <h2>🚨 The Fit Frustration Is Real</h2>
+      <ul>
+        <li>You've likely been here: you find a piece you love — the photo is perfect.</li>
+        <li>The size chart looks like math homework.</li>
+        <li>You squint at a model and think, “I’m somewhere between her and her.”</li>
+        <li>You order anyway... and return it two days later.</li>
+      </ul>
+      <p><strong>70% of online returns in fashion are still due to fit issues.</strong> And it costs the global fashion industry over <strong>$300 billion</strong> a year.</p>
+      <div class="divider"></div>
+      <h2>💸 The Hidden Cost of a Bad Purchase</h2>
+      <ul>
+        <li><strong>Time wasted</strong> returning, reordering, tracking.</li>
+        <li><strong>Money lost</strong> in restocking fees or non-refundable orders.</li>
+        <li><strong>Clutter created</strong> in your wardrobe from “almost okay” items you never wear.</li>
+        <li><strong>Environmental impact</strong> of reverse logistics and waste.</li>
+      </ul>
+      <div class="divider"></div>
+      <h2>👚 Wardrobes Are Growing. Satisfaction Isn’t.</h2>
+      <ul>
+        <li>“I have nothing to wear.”</li>
+        <li>“I ordered 5 sizes just to return 4.”</li>
+        <li>“I don’t remember what’s in my closet anymore.”</li>
+      </ul>
+      <p>Turns out, it’s not about <em>more</em>. It’s about <strong>what fits — and what feels right.</strong></p>
+      <div class="divider"></div>
+      <h2>💡 There Has to Be a Smarter Way</h2>
+      <ul>
+        <li>You upload your measurements (once).</li>
+        <li>You build a digital twin.</li>
+        <li>You virtually try on clothes before they ship.</li>
+        <li>You only keep what fits and feels good.</li>
+      </ul>
+      <div class="divider"></div>
+      <h2>👀 What’s Coming Next</h2>
+      <p>We’re building something new. It’s called <strong>CORA</strong> — a tool designed to solve these exact problems using 3D virtual try-ons and AI styling. No gimmicks. Just the future of fashion made personal, private, and precise.</p>
+      <p>We're not here to hype. We’re here to rethink what “buying clothes online” could feel like — finally.</p>
+      <a href="#waitlist" class="cta">Join the Waitlist →</a>
+      <div class="tldr">
+        <h2>🧠 TL;DR</h2>
+        <ul>
+          <li>Online fashion still feels risky — mainly due to fit.</li>
+          <li>Bad purchases cost us more than we realize.</li>
+          <li>Technology like 3D try-ons and AI can finally fix this.</li>
+          <li>CORA is building it — and you can be part of it.</li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div class="related-posts">
+        <h3>Related Posts</h3>
+        <ul>
+          <li><a href="#">How AI is Changing Fashion Shopping</a></li>
+          <li><a href="#">5 Tips to Find Your Perfect Fit Online</a></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="copyright">© 2025 CORA. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Header Scroll Script -->
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+</body>
+</html>

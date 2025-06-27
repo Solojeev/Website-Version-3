@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Virtual Try-On</title>
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --success-color: #28a745;
+      --background-light: #f8f8f8;
+      --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+      --transition-fast: all 0.3s ease;
+    }
+
+   body {
+   font-family: Arial, sans-serif;
+   background: #f5f5f5;
+   margin: 0 auto; 
+   padding: 20px;
+  max-width: 1200px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  }
+
+      h1, h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .gender-selection {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .gender-option {
+      border: 3px solid transparent;
+      border-radius: 10px;
+      padding: 10px;
+      background: white;
+      box-shadow: var(--shadow-light);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-align: center;
+      width: 140px;
+    }
+
+    .gender-option.selected {
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 15px rgba(0,123,255,0.2);
+      transform: scale(1.05);
+    }
+
+
+    .dimmed {
+  opacity: 0.4;
+  }
+
+
+    .gender-option img {
+      width: 100px;
+      height: 150px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 5px;
+    }
+
+    .clothing-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 80px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-light);
+      text-align: center;
+      transition: var(--transition-fast);
+    }
+
+    .card.hidden {
+      display: none;
+    }
+
+
+     .filter-panel {
+  margin-bottom: 90px;
+}
+     
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      background-color: var(--background-light);
+      border-radius: 5px;
+    }
+
+    .btn {
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px 0;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-success {
+      background-color: var(--success-color);
+    }
+
+    .category-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      justify-content: center;
+    }
+
+    .btn-category {
+      background: #e9ecef;
+      color: #495057;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      cursor: pointer;
+    }
+    .product-preview {
+      position: relative;
+      height: 200px;
+      margin-bottom: 15px;
+    }
+
+    .preview-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background-color: var(--background-light);
+      border-radius: 5px;
+    }
+
+    .preview-image.active {
+      opacity: 1;
+    }
+    
+    .btn-category.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .result-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    min-height: 220px;
+    grid-column: 1 / -1; /* Add this line */
+   }
+
+    #resultImage {
+      max-width: 400px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .empty-state {
+      color: #999;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Virtual Try-On</h1>
+
+  <div class="gender-selection">
+    <div class="gender-option selected" data-gender="male">
+      <img src="Male\Male Model\male-selector.png" alt="Male" />
+      <span>Male</span>
+    </div>
+    <div class="gender-option" data-gender="female">
+      <img src="Female\Female Model\female-selector.png" alt="Female" />
+      <span>Female</span>
+    </div>
+  </div>
+
+
+<div class="filter-panel">
+  <label for="occasionSelect">Occasion:</label>
+  <select id="occasionSelect">
+    <option value="">--Choose--</option>
+    <option value="casual">Casual</option>
+    <option value="business">Business</option>
+    <option value="dateNight">Date Night</option>
+  </select>
+</div>
+
+
+
+
+  <div class="clothing-container">
+    
+    <!-- Male Items -->
+    <div class="card" data-gender="male">
+      <div class="product-preview">
+      
+   <!-- Default image will be first visible -->
+      <img data-category="basic" src="Male/Men-Tshirts/Mens-basic.png" class="preview-image active" alt="Basic Topwear">
+      <img data-category="polo" src="Male/Men-Tshirts/Mens-polo.png" class="preview-image" alt="Polo Topwear">
+      <img data-category="graphic" src="Male/Men-Tshirts/Mens-graphic.png" class="preview-image" alt="Graphic Topwear">
+      </div>
+ 
+      <div class="category-group">
+        <button class="btn-category" data-category="basic">Basic</button>
+        <button class="btn-category" data-category="polo">Polo</button>
+        <button class="btn-category" data-category="graphic">Graphic</button>
+      </div>
+      <button class="btn btn-primary" data-type="tshirt">Try Topwear</button>
+    </div>
+    <div class="card" data-gender="male">
+  <div class="product-preview">
+    <img data-category="blue" src="Male/Men Jeans/Mens blue jeans.png" class="preview-image active" alt="Blue Jeans">
+    <img data-category="black" src="Male/Men Jeans/Mens black jeans.png" class="preview-image" alt="Black Jeans">
+    <img data-category="beige" src="Male/Men Jeans/Mens beige jeans.png" class="preview-image" alt="beige Jeans">
+  </div>
+  <div class="category-group">
+    <button class="btn-category active" data-category="blue">Blue</button>
+    <button class="btn-category" data-category="black">Black</button>
+    <button class="btn-category" data-category="beige">Beige</button>
+  </div>
+  <button class="btn btn-primary" data-type="bottomwear">Try Bottomwear</button>
+</div>
+
+    <!-- Female Items -->
+    <div class="card hidden" data-gender="female">
+      <div class="product-preview">
+        <img data-category="basic" src="Female/Female-Tshirts/Women-basic.png" class="preview-image active" alt="Basic Topwear">
+        <img data-category="croptop" src="Female/Female-Tshirts/Women-croptop.png" class="preview-image" alt="Croptop Topwear">
+        <img data-category="graphic" src="Female/Female-Tshirts/Women-graphic.png" class="preview-image" alt="Graphic Topwear">
+      </div>
+      <div class="category-group">
+        <button class="btn-category" data-category="basic">Basic</button>
+        <button class="btn-category" data-category="croptop">Croptop</button>
+        <button class="btn-category" data-category="graphic">Graphic</button>
+      </div>
+      <button class="btn btn-primary" data-type="tshirt">Try Topwear</button>
+    </div>
+    <div class="card hidden" data-gender="female">
+      <div class="product-preview">
+        <img data-category="blue" src="Female/Female Jeans/Female blue jeans.png" class="preview-image active" alt="Blue Jeans">
+        <img data-category="Pink" src="Female/Female Jeans/Female pink jeans.png" class="preview-image" alt="Pink Jeans">
+        <img data-category="white" src="Female/Female Jeans/Female white jeans.png" class="preview-image" alt="White Jeans">
+      </div>
+      <div class="category-group">
+        <button class="btn-category" data-category="blue">Blue</button>
+        <button class="btn-category" data-category="Pink">Pink</button>
+        <button class="btn-category" data-category="white">White</button>
+      </div>
+      <button class="btn btn-primary" data-type="bottomwear">Try Bottomwear</button>
+    </div>
+
+  <div class="result-panel">
+  <h3>Try-On Result</h3>
+  <img id="resultImage" src="" alt="Final Result" />
+  <p class="empty-state">No final image to show yet. Please select one or both options.</p>
+  <p class="suggestion-text" id="suggestionText"></p>
+  </div>
+
+     <!-- SAVE OUTFIT Button + Favorites Panel -->
+<button id="saveOutfitBtn" class="btn btn-primary">Save Outfit</button>
+
+<div id="favoritesPanel" style="display:none;">
+  <h4>My Favorites</h4>
+
+  <!-- Separate lists for Male / Female outfits -->
+  <h5>Male Outfits</h5>
+  <ul id="maleFavoritesList"></ul>
+
+  <h5>Female Outfits</h5>
+  <ul id="femaleFavoritesList"></ul>
+</div>
+  
+
+  <script>
+
+   let favorites = [];
+
+    
+  const IMAGE_PATHS = {
+    male: {
+      combined: {
+      'basic-blue': "Male/Men combined result/Mens blue black combo.png", 
+      'basic-black': "Male/Men combined result/Mens black jeans black tshirt combo.png",
+      'basic-beige': "Male/Men combined result/Mens beige black tshirt combo.png",
+      'polo-blue': "Male/Men combined result/Mens blue polo combo.png",
+      'polo-black': "Male/Men combined result/Mens black polo tshirt combo.png",
+      'polo-beige': "Male/Men combined result/Mens beige polo tshirt combo.png",
+      'graphic-blue': "Male/Men combined result/Mens blue printed combo.png",
+      'graphic-black': "Male/Men combined result/Mens black printed tshirt combo.png",
+      'graphic-beige': "Male/Men combined result/Mens beige printed tshirt combo.png",
+    },
+      tshirt: {
+        basic: "Male/Mens Tshirt result/male-tshirt-1.png",
+        polo: "Male/Mens Tshirt result/Mens-polo-1.png",
+        graphic: "Male/Mens Tshirt result/Mens printed tshirt result.png"
+      },
+      bottomwear: {
+        blue: "Male/Mens jeans Result/Mens blue jeans result.png",
+        black: "Male/Mens jeans Result/Mens black jeans result.png",
+        beige: "Male/Mens jeans Result/Mens beige jeans result.png" 
+      },
+    },
+    female: {
+      combined: {
+      'basic-blue': "Female/Female combined result/Female blue pink tshirt combo.png", 
+      'basic-Pink': "Female/Female combined result/Female pink tshirt pink jeans combo.png",
+      'basic-white': "Female/Female combined result/Female white pink tshirt combo.png",
+      'croptop-blue': "Female/Female combined result/Female blue croptop combo.png",
+      'croptop-Pink': "Female/Female combined result/Female pink croptop combo.png",
+      'croptop-white': "Female/Female combined result/Female white croptop combo.png",
+      'graphic-blue': "Female/Female combined result/Female blue printed tshirt combo.png",
+      'graphic-Pink': "Female/Female combined result/Female pink printed tshirt combo.png",
+      'graphic-white': "Female/Female combined result/Female white printed tshirt combo.png",
+    },
+      tshirt: {
+        basic: "Female/Female Tshirt result/Female pink tshirt result.png",
+        croptop: "Female/Female Tshirt result/Female croptop result.png",
+        graphic: "Female/Female Tshirt result/Female printed tshirt result.png"
+      },
+      bottomwear: {
+        blue: "Female/Female jeans result/Female blue jeans result.png",
+        Pink: "Female/Female jeans result/Female pink jeans result.png",
+        white: "Female/Female jeans result/Female white jeans result.png"
+      }
+    }
+ };
+    
+ // Color combination suggestions
+const COLOR_SUGGESTIONS = {
+  male: {
+    tshirt: {
+      basic: ['blue', 'black'],
+      polo: ['beige', 'blue'],
+      graphic: ['black', 'beige']
+    },
+    bottomwear: {
+      blue: ['basic', 'polo'],
+      black: ['basic', 'graphic'],
+      beige: ['polo', 'graphic']
+    }
+  },
+  female: {
+    tshirt: {
+      basic: ['blue', 'white'],
+      croptop: ['Pink', 'white'],
+      graphic: ['blue', 'Pink']
+    },
+    bottomwear: {
+      blue: ['basic', 'graphic'],
+      Pink: ['croptop', 'graphic'],
+      white: ['basic', 'croptop']
+    }
+  }
+};
+
+  
+ const OCCASION_DATA = {
+  casual: { tshirt: ['basic', 'graphic'], bottomwear: ['blue','white'] },
+  business: { tshirt: ['polo'], bottomwear: ['black','beige'] },
+  dateNight: { tshirt: ['graphic','croptop'], bottomwear: ['black','Pink'] },
+};
+
+
+ 
+  // Generate color combination suggestion
+function getColorSuggestion() {
+  const { tshirt, bottomwear } = currentState.selectedItems;
+  const genderSuggestions = COLOR_SUGGESTIONS[currentState.gender];
+
+  // 1. Check for black-on-black first
+  if (tshirt === 'basic' && bottomwear === 'black') {
+    return 'Pair black with a lighter accent color to avoid a fully monochrome look!';
+  }
+
+  // 2. Then proceed with the existing color-suggestion logic
+  if (tshirt && !bottomwear) {
+    const suggestedBottoms = genderSuggestions.tshirt[tshirt];
+    return `For a ${tshirt} top, I suggest pairing it with ${suggestedBottoms.join(' or ')} bottoms.`;
+
+  } else if (bottomwear && !tshirt) {
+    const suggestedTops = genderSuggestions.bottomwear[bottomwear];
+    return `For ${bottomwear} bottoms, I suggest pairing them with ${suggestedTops.join(' or ')} tops.`;
+
+  } else if (tshirt && bottomwear) {
+    const suggestedBottoms = genderSuggestions.tshirt[tshirt];
+    if (suggestedBottoms.includes(bottomwear)) {
+      return `Great choice! The ${tshirt} top pairs well with ${bottomwear} bottoms.`;
+    } else {
+      return `For a ${tshirt} top, I suggest ${suggestedBottoms.join(' or ')} bottoms instead of ${bottomwear}.`;
+    }
+  }
+  return '';
+}
+
+
+  // State Management
+  let currentState = {
+    gender: 'male',
+    selectedItems: {
+      tshirt: null, // 'basic', 'polo', 'graphic'
+      bottomwear: null,
+      bottomwearCategory: 'blue' // Default bottomwear category
+    }
+  };
+
+  // DOM Elements
+  const elements = {
+    genderOptions: document.querySelectorAll('.gender-option'),
+    clothingCards: document.querySelectorAll('.card'),
+    tryButtons: document.querySelectorAll('.btn'),
+    categoryButtons: document.querySelectorAll('.btn-category'),
+    resultImage: document.getElementById('resultImage'),
+    emptyState: document.querySelector('.empty-state'),
+    suggestionText: document.getElementById('suggestionText')
+ 
+  };
+
+
+ const occasionSelect = document.getElementById('occasionSelect');
+occasionSelect.addEventListener('change', () => {
+  const chosenOccasion = occasionSelect.value;
+  if (!chosenOccasion) {
+    // If user picks "--Choose--", remove any filtering (show everything)
+    resetOccasionFilter();
+    return;
+  }
+
+  const recommendedTops = OCCASION_DATA[chosenOccasion].tshirt;
+  const recommendedBottoms = OCCASION_DATA[chosenOccasion].bottomwear;
+
+  applyOccasionFilter(recommendedTops, recommendedBottoms);
+});
+
+
+ document.getElementById('saveOutfitBtn').addEventListener('click', () => {
+  const { tshirt, bottomwear } = currentState.selectedItems;
+  if (!tshirt || !bottomwear) {
+    return alert('Please select a top and bottom first!');
+  }
+
+  // Include currentState.gender
+  favorites.push({
+    gender: currentState.gender,
+    tshirt,
+    bottomwear
+  });
+
+  // Re-render the favorites panel
+  renderFavorites();
+
+  document.getElementById('favoritesPanel').style.display = 'block';
+});
+
+
+  // Event Handlers
+  function handleGenderSelection(event) {
+  const selectedGender = event.currentTarget.dataset.gender;
+
+  elements.genderOptions.forEach(option => option.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+
+  currentState = {
+    gender: selectedGender,
+    selectedItems: { tshirt: null, bottomwear: null, bottomwearCategory: 'blue' } // Reset both to null
+  };
+
+  elements.clothingCards.forEach(card =>
+    card.classList.toggle('hidden', card.dataset.gender !== selectedGender)
+  );
+
+  elements.tryButtons.forEach(btn => btn.classList.remove('btn-success'));
+  elements.categoryButtons.forEach(btn => btn.classList.remove('active'));
+
+  // Set the default active category for the newly selected gender's bottomwear
+  const bottomwearCard = document.querySelector(`.card[data-gender="${selectedGender}"] button[data-type="bottomwear"]`).closest('.card');
+  if (bottomwearCard) {
+    const firstBottomwearCategoryButton = bottomwearCard.querySelector('.category-group .btn-category');
+    if (firstBottomwearCategoryButton) {
+      firstBottomwearCategoryButton.classList.add('active');
+      const defaultCategory = firstBottomwearCategoryButton.dataset.category;
+      currentState.selectedItems.bottomwearCategory = defaultCategory;
+      bottomwearCard.querySelector(`.product-preview img[data-category="${defaultCategory}"]`).classList.add('active');
+    }
+  }
+
+  // Set the default active category for the newly selected gender's topwear
+  const topwearCard = document.querySelector(`.card[data-gender="${selectedGender}"] button[data-type="tshirt"]`).closest('.card');
+  if (topwearCard) {
+    const firstTopwearCategoryButton = topwearCard.querySelector('.category-group .btn-category');
+    if (firstTopwearCategoryButton) {
+      firstTopwearCategoryButton.classList.add('active');
+      const defaultCategory = firstTopwearCategoryButton.dataset.category;
+      currentState.selectedItems.tshirt = defaultCategory;
+      topwearCard.querySelector(`.product-preview img[data-category="${defaultCategory}"]`).classList.add('active');
+    }
+  }
+
+  updateResultDisplay();
+}
+
+function renderFavorites() {
+  const maleList = document.getElementById('maleFavoritesList');
+  const femaleList = document.getElementById('femaleFavoritesList');
+
+  // Clear out old items before re-rendering
+  maleList.innerHTML = '';
+  femaleList.innerHTML = '';
+
+  // Loop through your saved outfits
+  favorites.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = `Top: ${item.tshirt}, Bottom: ${item.bottomwear}`;
+    
+    // If it's a male outfit, append to maleList, otherwise to femaleList
+    if (item.gender === 'male') {
+      maleList.appendChild(li);
+    } else if (item.gender === 'female') {
+      femaleList.appendChild(li);
+    }
+  });
+}
+
+
+function handleCategorySelection(event) {
+  const category = event.currentTarget.dataset.category;
+  const card = event.currentTarget.closest('.card');
+  const tryBtn = card.querySelector('.btn[data-type]');
+  tryBtn.classList.remove('btn-success'); // Removes green highlight
+
+
+  // Reset all in this card
+  card.querySelectorAll('.btn-category').forEach(btn =>
+    btn.classList.remove('active')
+  );
+  card.querySelectorAll('.preview-image').forEach(img =>
+    img.classList.remove('active')
+  );
+
+  // Activate selected
+  event.currentTarget.classList.add('active');
+  card.querySelector(`.preview-image[data-category="${category}"]`).classList.add('active');
+
+  // Update state
+  const type = card.querySelector('.btn[data-type]').dataset.type;
+  if (type === 'tshirt') {
+    currentState.selectedItems.tshirt = category;
+  } else if (type === 'bottomwear') {
+    currentState.selectedItems.bottomwear = category;
+    currentState.selectedItems.bottomwearCategory = category;
+  }
+
+  if (tryBtn.classList.contains('btn-success')) {
+  tryBtn.classList.remove('btn-success');
+}
+  updateResultDisplay();
+}
+
+
+
+
+function applyOccasionFilter(recommendedTops, recommendedBottoms) {
+  elements.categoryButtons.forEach(btn => {
+    const category = btn.dataset.category;
+    const type = btn.closest('.card').querySelector('.btn[data-type]').dataset.type;
+
+    let isRecommended = false;
+    if (type === 'tshirt') {
+      isRecommended = recommendedTops.includes(category);
+    } else if (type === 'bottomwear') {
+      isRecommended = recommendedBottoms.includes(category);
+    }
+
+    if (isRecommended) {
+      btn.classList.remove('dimmed');
+    } else {
+      btn.classList.add('dimmed');
+    }
+  });
+}
+
+function resetOccasionFilter() {
+  elements.categoryButtons.forEach(btn => {
+    btn.classList.remove('dimmed');
+  });
+}
+
+
+
+
+function handleClothingSelection(event) {
+  const type = event.currentTarget.dataset.type;
+  console.log('handleClothingSelection called for:', type);
+
+  if (type === 'tshirt') {
+    if (!currentState.selectedItems.tshirt) {
+      alert('Please select a Topwear category first');
+      return;
+    }
+    event.currentTarget.classList.toggle('btn-success');
+  } else if (type === 'bottomwear') {
+    if (!currentState.selectedItems.bottomwear) { // Added check for bottomwear selection
+      alert('Please select a Bottomwear category first');
+      return;
+    }
+    event.currentTarget.classList.toggle('btn-success');
+  }
+
+  console.log("currentState before updateResultDisplay:", currentState);
+  updateResultDisplay();
+  console.log(currentState);
+}
+
+function updateResultDisplay() {
+  const { tshirt, bottomwear } = currentState.selectedItems;
+  const genderImages = IMAGE_PATHS[currentState.gender];
+
+  let imagePath = '';
+  const isTshirtTried = document.querySelector(`.card[data-gender="${currentState.gender}"] button[data-type="tshirt"]`)?.classList.contains('btn-success') || false;
+  const isBottomwearTried = document.querySelector(`.card[data-gender="${currentState.gender}"] button[data-type="bottomwear"]`)?.classList.contains('btn-success') || false;
+
+  if (tshirt && bottomwear && isTshirtTried && isBottomwearTried) {
+    const combinedKey = `${tshirt}-${bottomwear}`;
+    console.log("Generated combinedKey:", combinedKey);
+    imagePath = genderImages.combined[combinedKey];
+  } else if (tshirt && isTshirtTried) {
+    imagePath = genderImages.tshirt[tshirt];
+  } else if (bottomwear && isBottomwearTried) {
+    imagePath = genderImages.bottomwear[bottomwear];
+  }
+
+  toggleResultDisplay(imagePath);
+ 
+  elements.suggestionText.textContent = getColorSuggestion();
+
+}
+
+  function toggleResultDisplay(imagePath) {
+    if (imagePath) {
+      elements.resultImage.src = imagePath;
+      elements.resultImage.style.display = 'inline';
+      elements.emptyState.style.display = 'none';
+    } else {
+      elements.resultImage.src = '';
+      elements.resultImage.style.display = 'none';
+      elements.emptyState.style.display = 'block';
+    }
+  }
+
+  function initialize() {
+    // Set initial visibility
+    elements.clothingCards.forEach(card => {
+      card.classList.toggle('hidden', card.dataset.gender !== 'male');
+    });
+
+    elements.genderOptions.forEach(option =>
+      option.addEventListener('click', handleGenderSelection)
+    );
+
+    elements.categoryButtons.forEach(button =>
+      button.addEventListener('click', handleCategorySelection)
+    );
+
+    elements.tryButtons.forEach(button =>
+      button.addEventListener('click', handleClothingSelection)
+    );
+
+    // Initialize bottomwear category selection for male
+    const maleBottomwearCard = document.querySelector('.card[data-gender="male"] button[data-type="bottomwear"]').closest('.card');
+    if (maleBottomwearCard) {
+      const firstBottomwearCategoryButton = maleBottomwearCard.querySelector('.category-group .btn-category');
+      if (firstBottomwearCategoryButton) {
+        firstBottomwearCategoryButton.classList.add('active');
+        currentState.selectedItems.bottomwearCategory = firstBottomwearCategoryButton.dataset.category;
+        maleBottomwearCard.querySelector(`.product-preview img[data-category="${currentState.selectedItems.bottomwearCategory}"]`).classList.add('active');
+      }
+    }
+
+    updateResultDisplay();
+  }
+  initialize();
+</script>

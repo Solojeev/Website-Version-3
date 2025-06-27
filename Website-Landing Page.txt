@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORA - Reinventing Online Fashion</title>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        :root {
+            --primary-blue: #007AFF;
+            --secondary-navy: #003B70;
+            --background-white: #FFFFFF;
+            --background-grey: #F8F8F8;
+            --text-color: #1A1A1A;
+            --success-green: #34C759;
+            --footer-color: #1A1A1A;
+        }
+
+
+      .hero {
+    background: url('"ChatGPT website Banner_edited_edited_edited_edited.jpg"') no-repeat center center;
+    background-size: cover;
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+   /* Optional overlay to improve text readability over the image */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      /* Use a semi-transparent black overlay – adjust opacity as desired */
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+  }
+
+  /* Ensure the text content appears above the overlay */
+   .hero-content {
+     position: relative;
+     z-index: 2;
+}
+
+
+   
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+        }
+        
+        .btn-white {
+            background-color: white;
+            color: var(--primary-blue);
+        }
+        
+        .btn-large {
+            padding: 15px 40px;
+            font-size: 18px;
+        }
+        
+        .hero {
+            background-color: var(--background-white);
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.03) 0%, transparent 40%),
+                            radial-gradient(circle at 90% 80%, rgba(0, 122, 255, 0.03) 0%, transparent 40%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .secondary-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary-blue);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .secondary-link:hover {
+            transform: translateY(-2px);
+        }
+        
+        .hero-visual {
+            margin-top: 3rem;
+            position: relative;
+            height: 300px;
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .problem-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 3rem;
+        }
+        
+        .problem-card {
+            flex: 1;
+            min-width: 280px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .problem-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 1rem 0;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 0 15px;
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(0, 122, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary-blue);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--primary-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .demo-visual {
+            margin-top: 3rem;
+            position: relative;
+            height: 400px;
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tech-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 3rem;
+        }
+        
+        .tech-feature {
+            flex: 1;
+            min-width: 280px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .value-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 3rem;
+        }
+        
+        .value-column {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .value-column:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .value-list {
+            list-style-type: none;
+        }
+        
+        .value-list li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .value-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-green);
+            font-weight: bold;
+        }
+        
+        .waitlist-form {
+            margin-top: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .input-field {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 6px 0 0 6px;
+            font-size: 16px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+        
+        .privacy-note {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+        
+        .waitlist-counter {
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.875rem;
+        }
+        
+        .footer {
+            background-color: var(--footer-color);
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-content {
+            background-color: var(--background-white);
+            margin: 5% auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 992px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .section { padding: 80px 0; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .section { padding: 60px 0; }
+            .problem-cards, .value-columns { flex-direction: column; }
+            .footer-content { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero section" id="hero">
+        <div class="container">
+            <div class="hero-content text-center" data-aos="fade-up">
+                <h1>Reinventing Online Fashion: Fit Guaranteed.</h1>
+                <p class="hero-subtitle">CORA is building hyper-realistic virtual try-on technology to eliminate sizing guesswork for shoppers, drastically cut returns for retailers, and define the future of e-commerce.</p>
+                <a href="#cta" class="btn btn-large">Join the Early Access Waitlist</a>
+                <div>
+                    <a href="#solution" class="secondary-link">See the Concept Demo ↓</a>
+                </div>
+            </div>
+            <div class="hero-visual" data-aos="fade-up" data-aos-delay="200">
+                <div style="text-align: center;">
+                    <p style="color: #666;">Hero Animation/Image Placeholder</p>
+                    <p style="color: #999; font-style: italic; font-size: 14px;">3D illustration showing person silhouette with measurement lines</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem section" id="problem">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <h2>Sizing Uncertainty Costs Billions.</h2>
+                <p>Online retailers and shoppers alike are caught in a costly sizing dilemma.</p>
+                <div style="margin: 1rem 0;">
+                    <em>"The fashion industry loses $300 billion annually due to returns, with 70% attributed to fit issues."</em>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem; color: #666;">- Fashion Retail Analytics, 2024</div>
+                </div>
+            </div>
+            <div class="problem-cards">
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="problem-icon"><i class="fas fa-rotate-left"></i></div>
+                    <h3>Return Crisis</h3>
+                    <div class="stat">30%</div>
+                    <p>High return rates due to poor fit erode profits and create waste.</p>
+                </div>
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="problem-icon"><i class="fas fa-cart-shopping"></i></div>
+                    <h3>Customer Hesitation</h3>
+                    <div class="stat">70%</div>
+                    <p>Shoppers lack confidence buying clothes online, leading to abandoned carts.</p>
+                </div>
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="problem-icon"><i class="fas fa-ruler"></i></div>
+                    <h3>Sizing Confusion</h3>
+                    <div class="stat">88%</div>
+                    <p>Existing sizing guides are often inaccurate and frustrating.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution section" id="solution">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <h2>Visualize Perfect Fit: The CORA Experience</h2>
+                <p>Imagine your customers selecting an item, choosing their avatar, and instantly seeing a realistic preview of how it fits – accurate down to the drape and size. That's the confidence CORA will deliver.</p>
+            </div>
+            <div class="steps">
+                <div class="step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-icon">
+                        <i class="fas fa-shirt"></i>
+                        <div class="step-number">1</div>
+                    </div>
+                    <h3>Select Item</h3>
+                    <p>Choose from clothing inventory</p>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-icon">
+                        <i class="fas fa-user"></i>
+                        <div class="step-number">2</div>
+                    </div>
+                    <h3>Create Avatar</h3>
+                    <p>Input measurements or select body type</p>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-icon">
+                        <i class="fas fa-eye"></i>
+                        <div class="step-number">3</div>
+                    </div>
+                    <h3>See Preview</h3>
+                    <p>Experience realistic try-on visualization</p>
+                </div>
+            </div>
+            <div class="text-center" style="margin-top: 3rem;">
+                <div class="comparison" data-aos="fade-up">
+                    <h3>Traditional vs. CORA Experience</h3>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px;">
+                        <div style="flex: 1; min-width: 300px; background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                            <h4>Traditional Online Shopping</h4>
+                            <div style="height: 200px; background: #eee; margin: 15px 0; display: flex; align-items: center; justify-content: center;">
+                                <p style="color: #999;">Before Image Placeholder</p>
+                            </div>
+                            <ul style="text-align: left; color: #666;">
+                                <li>Size charts with static measurements</li>
+                                <li>No personalization</li>
+                                <li>High uncertainty</li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; background: #f0f7ff; padding: 20px; border-radius: 10px; border: 2px solid #007AFF;">
+                            <h4>CORA Experience</h4>
+                            <div style="height: 200px; background: #e6f0ff; margin: 15px 0; display: flex; align-items: center; justify-content: center;">
+                                <p style="color: #999;">After Image Placeholder</p>
+                            </div>
+                            <ul style="text-align: left; color: #666;">
+                                <li>Dynamic 3D visualization</li>
+                                <li>Personalized to your measurements</li>
+                                <li>Confidence in purchase</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-large" style="margin-top: 40px;" id="openModal" data-aos="fade-up">Launch Interactive Concept Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology section" id="technology">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <h2>Cutting-Edge Technology</h2>
+                <p>CORA combines advanced computer vision, AI body modeling, and physics-based clothing simulation to create hyper-realistic virtual try-ons.</p>
+            </div>
+            <div class="tech-features">
+                <div class="tech-feature" data-aos="fade-up" data-aos-delay="100">
+                    <div class="tech-icon"><i class="fas fa-brain"></i></div>
+                    <h3>AI Body Modeling</h3>
+                    <p>Creates accurate avatars from minimal measurements</p>
+                </div>
+                <div class="tech-feature" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tech-icon"><i class="fas fa-wind"></i></div>
+                    <h3>Physics-Based Simulation</h3>
+                    <p>Models how fabrics drape and stretch on different body types</p>
+                </div>
+                <div class="tech-feature" data-aos="fade-up" data-aos-delay="300">
+                    <div class="tech-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Real-Time Rendering</h3>
+                    <p>Delivers instant visualization of fit and appearance</p>
+                </div>
+            </div>
+            <div class="tech-visual" data-aos="fade-up" data-aos-delay="400">
+                <div style="text-align: center;">
+                    <p style="color: #666;">Technology Visualization Placeholder</p>
+                    <p style="color: #999; font-style: italic; font-size: 14px;">Abstract tech-focused illustration showing AI/ML concept</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Value Section -->
+    <section class="business-value section" id="value">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <h2>Value for Retailers and Shoppers</h2>
+                <p>CORA creates meaningful impact throughout the fashion e-commerce ecosystem.</p>
+            </div>
+            <div class="value-columns">
+                <div class="value-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3>For Retailers</h3>
+                    <ul class="value-list">
+                        <li>Reduce return rates by up to 40%</li>
+                        <li>Increase conversion rates</li>
+                        <li>Enhance customer satisfaction</li>
+                        <li>Gather valuable fit data</li>
+                        <li>Reduce logistics costs</li>
+                        <li>Minimize environmental impact</li>
+                    </ul>
+                </div>
+                <div class="value-column" data-aos="fade-up" data-aos-delay="200">
+                    <h3>For Shoppers</h3>
+                    <ul class="value-list">
+                        <li>Shop with confidence</li>
+                        <li>Less time wasted on returns</li>
+                        <li>Discover perfect-fitting clothes</li>
+                        <li>More sustainable shopping experience</li>
+                        <li>Personalized recommendations</li>
+                        <li>Time-saving shopping experience</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta section" id="cta">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up">
+                <h2>Shape the Future of Fashion Retail.</h2>
+                <p>Be the first to know about CORA's development milestones, gain early access, and receive insights into virtual fit technology.</p>
+                <form class="waitlist-form">
+                    <div class="input-group">
+                        <input type="email" class="input-field" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn btn-white">Join Waitlist</button>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="insights">
+                        <label for="insights">Send me fashion tech insights</label>
+                    </div>
+                    <p class="privacy-note">We value your privacy. <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a></p>
+                </form>
+                <div class="waitlist-counter" data-aos="fade-up" data-aos-delay="200">
+                    <span id="counter">527</span> fashion innovators already on the waitlist
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">© 2025 CORA. All rights reserved.</div>
+                <div class="social-links">
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:investors@corafit.com">Investors</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Press Kit</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">CORA: Virtual Try-On Concept</h2>
+            <div class="demo-container">
+                <div style="text-align: center;">
+                    <p style="font-size: 18px; margin-bottom: 20px;">Interactive Demo Placeholder</p>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
+                        <button class="btn" style="background: #eee; color: #333;">Male</button>
+                        <button class="btn">Female</button>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
+                        <button class="btn" style="background: #eee; color: #333;">Topwear</button>
+                        <button class="btn">Bottomwear</button>
+                    </div>
+                    <div style="height: 250px; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <p style="color: #999;">3D Visualization Preview</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
+        });
+
+        // Modal Handling
+        const modal = document.getElementById('demoModal');
+        const openModalBtn = document.getElementById('openModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+
+        openModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.style.display = 'block';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Waitlist Form Handling
+        const form = document.querySelector('.waitlist-form');
+        const emailInput = document.querySelector('.input-field');
+        const counter = document.getElementById('counter');
+        let waitlistCount = 527;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (emailInput.value && emailInput.checkValidity()) {
+                waitlistCount++;
+                counter.textContent = waitlistCount;
+                emailInput.value = '';
+                alert('Thank you for joining the waitlist!');
+            } else {
+                alert('Please enter a valid email address');
+            }
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | CORA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-orange: #f28d28c4;
+      --background-grey: #0D0D0D;
+      --text-color: #1A1A1A;
+      --header-color: #5b5b5b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-grey);
+      color: var(--text-color);
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 120px auto 40px;
+      text-align: center;
+      background: white;
+      box-shadow: 0 10px 25px #0000000d;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: var(--primary-orange);
+      color: white;
+      padding: 14px 30px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e07c1e;
+    }
+
+    .back-link {
+      margin-top: 2rem;
+      display: inline-block;
+      color: var(--primary-orange);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background-color: rgba(42, 42, 42, 0.5);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 60px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .header.scrolled {
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px #00000033;
+    }
+
+    .header .logo {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--primary-orange);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .header .nav-links {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+
+    .header .nav-links a {
+      font-size: 1rem;
+      color: var(--header-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .header .nav-links a:hover {
+      color: var(--primary-orange);
+    }
+
+    footer {
+      background-color: var(--text-color);
+      color: white;
+      padding: 40px 0;
+    }
+
+    .footer-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .footer-links a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      opacity: 0.8;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .copyright {
+      font-size: small;
+      color: #f28d28c4;
+    }
+
+  @media(max-width: 768px) {
+    .header {
+      flex-direction: row;
+      height: 30px;
+      padding: 30px 40px;
+      align-items: center;
+    }
+    .header .logo {
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+    .header .nav-links {
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .intro {
+      font-size: 0.95rem;
+    }
+
+    .footer {
+      padding: 20px 0px;
+      height: auto;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .footer-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      row-gap: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      margin: 0;
+    }
+
+    .social-links {
+      justify-content: center;
+    }
+}
+  @media (max-width: 900px) {
+    .contact-content {
+      flex-direction: column;
+      gap: 32px;
+      align-items: stretch;
+      padding: 0 12px;
+    }
+    .contact-info {
+      padding: 0;
+    }
+    .contact-form-card {
+      max-width: 100%;
+      min-width: 0;
+      padding: 32px 12px;
+    }
+  }
+  @media (max-width: 600px) {
+    .contact-hero {
+      padding: 80px 0 30px 0;
+    }
+    .contact-content {
+      gap: 18px;
+      padding: 0 4vw;
+    }
+    .contact-info h1 {
+      font-size: 1.5rem;
+    }
+    .contact-intro {
+      font-size: 1rem;
+    }
+    .contact-form-card {
+      padding: 18px 4vw;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000022;
+    }
+    .contact-form-card button {
+      font-size: 1rem;
+      padding: 12px 0;
+    }
+    .contact-details {
+      font-size: 0.98rem;
+    }
+    .contact-social a {
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+  }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <a href="index.html" class="logo">CORA</a>
+    <nav class="nav-links">
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="contact-hero">
+    <div class="contact-content">
+      <div class="contact-info">
+        <h1>Send us a Message</h1>
+        <p class="contact-intro">Let’s talk about the future of fashion tech.<br>
+          Whether you’re a retailer, investor, or just curious, we’d love to connect.<br>
+          Fill out the form or reach us directly at <a href="mailto:hello@cueaway.com">hello@cueaway.com</a>.
+        </p>
+        <div class="contact-details">
+          <div><i class="fa fa-envelope"></i> hello@cueaway.com</div>
+          <div><i class="fa fa-map-marker-alt"></i> Mumbai, India</div>
+        </div>
+        <div class="contact-social">
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="contact-form-card">
+        <form>
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="copyright">
+        © 2025 CORA. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+  <style>
+    body {
+      background: #0f1921;
+      color: #f7f7fa;
+    }
+    .contact-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 0 60px 0;
+      background: #0f1921;
+    }
+    .contact-content {
+      display: flex;
+      gap: 60px;
+      max-width: 980px;
+      width: 100%;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .contact-info {
+      flex: 1.1;
+      padding: 32px 0 32px 24px;
+    }
+    .contact-info h1 {
+      font-size: 2.5rem;
+      color: var(--primary-orange);
+      margin-bottom: 1.2rem;
+    }
+    .contact-intro {
+      font-size: 1.18rem;
+      margin-bottom: 2.2rem;
+      color: #f7f7fa;
+      line-height: 1.8;
+    }
+    .contact-info a {
+      color: var(--primary-orange);
+      text-decoration: underline;
+    }
+    .contact-details {
+      margin-bottom: 2.2rem;
+      color: #f7f7fa;
+      font-size: 1.08rem;
+    }
+    .contact-details div {
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .contact-social a {
+      color: var(--primary-orange);
+      font-size: 1.5rem;
+      margin-right: 18px;
+      transition: color 0.2s;
+    }
+    .contact-social a:hover {
+      color: #fff;
+    }
+    .contact-form-card {
+      flex: 1;
+      background: #181c22;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #00000022;
+      padding: 40px 32px 32px 32px;
+      min-width: 320px;
+      max-width: 400px;
+    }
+    .contact-form-card form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .contact-form-card label {
+      font-weight: 500;
+      color: #f7f7fa;
+      margin-bottom: 0.2rem;
+    }
+    .contact-form-card input,
+    .contact-form-card textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1.5px solid #23242a;
+      border-radius: 7px;
+      font-size: 1rem;
+      background: #23242a;
+      color: #f7f7fa;
+      margin-bottom: 0.2rem;
+    }
+    .contact-form-card input:focus,
+    .contact-form-card textarea:focus {
+      outline: 2px solid var(--primary-orange);
+      border-color: var(--primary-orange);
+    }
+    .contact-form-card button {
+      background-color: var(--primary-orange);
+      color: #181c22;
+      padding: 14px 0;
+      font-weight: 700;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .contact-form-card button:hover {
+      background: #fff;
+      color: var(--primary-orange);
+    }
+    @media (max-width: 900px) {
+      .contact-content {
+        flex-direction: column;
+        gap: 32px;
+        align-items: stretch;
+        padding: 0 12px;
+      }
+      .contact-info {
+        padding: 0;
+      }
+      .contact-form-card {
+        max-width: 100%;
+        min-width: 0;
+        padding: 32px 12px;
+      }
+    }
+    @media (max-width: 600px) {
+      .contact-hero {
+        padding: 80px 0 30px 0;
+      }
+      .contact-content {
+        gap: 18px;
+        padding: 0 4vw;
+      }
+      .contact-info h1 {
+        font-size: 1.5rem;
+      }
+      .contact-intro {
+        font-size: 1rem;
+      }
+      .contact-form-card {
+        padding: 18px 4vw;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px #00000022;
+      }
+      .contact-form-card button {
+        font-size: 1rem;
+        padding: 12px 0;
+      }
+      .contact-details {
+        font-size: 0.98rem;
+      }
+      .contact-social a {
+        font-size: 1.2rem;
+        margin-right: 10px;
+      }
+    }
+  </style>
+</body>
+</html>
